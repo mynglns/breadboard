@@ -97,7 +97,8 @@ function loadModel() {
     },
     (event) => {
       if (!event.total) return;
-      loadingLabel.textContent = `Loading model ${Math.round((event.loaded / event.total) * 100)}%`;
+      const percent = Math.min(100, Math.round((event.loaded / event.total) * 100));
+      loadingLabel.textContent = `Loading model ${percent}%`;
     },
     (error) => {
       console.error("Unable to load the GLB model", error);
