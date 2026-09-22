@@ -3,18 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="An interactive 3D view of a 5 V LED flasher breadboard circuit."
-    />
+    <meta name="description" content="A browser-based interactive 3D model viewer." />
     <meta name="theme-color" content="#0b0e0d" />
-    <title>LED Flasher / Interactive Build</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <title>LED Flasher / 3D Model</title>
     <link rel="stylesheet" href="./styles.css" />
     <script type="importmap">
       {
@@ -26,267 +17,26 @@
     </script>
   </head>
   <body>
-    <div class="app-shell">
-      <header class="topbar">
-        <a class="brand" href="./" aria-label="LED Flasher home">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32" fill="none">
-              <path d="M8 7.5h16v17H8z" stroke="currentColor" stroke-width="1.8" />
-              <path d="M4.5 11.5H8m16 0h3.5M4.5 20.5H8m16 0h3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-              <path d="M12 12v8m8-8v8M12 16h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-            </svg>
-          </span>
-          <span class="brand-word">breadboard<span class="brand-slash">/</span>001</span>
-        </a>
+    <main id="viewerShell" aria-label="Interactive 3D model viewer">
+      <div id="viewer" aria-label="Interactive 3D LED flasher model"></div>
 
-        <div class="topbar-status" aria-label="Model status">
-          <span class="live-dot" aria-hidden="true"></span>
-          <span>WebGL preview</span>
-          <span class="topbar-rule" aria-hidden="true"></span>
-          <span class="mono">5 V · ASTABLE</span>
-        </div>
-
-        <a
-          class="github-link"
-          href="https://github.com/mynglns/breadboard"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span>View source</span>
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 13 13 3M6 3h7v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
-      </header>
-
-      <main class="workspace">
-        <section class="stage-panel" aria-labelledby="page-title">
-          <div class="stage-intro">
-            <h1 id="page-title">Make the blink<br /><span>visible.</span></h1>
-            <p>
-              Orbit the build, pick a component, and watch the classic two-transistor
-              flasher trade charge for light.
-            </p>
-          </div>
-
-          <div class="stage-frame">
-            <div class="stage-header">
-              <span class="stage-label">Model viewport</span>
-              <span class="model-status" id="modelStatus" aria-live="polite">Loading geometry…</span>
-            </div>
-
-            <div class="viewer-wrap" id="viewerWrap">
-              <div class="loading-state" id="loadingState">
-                <span class="loader-orbit" aria-hidden="true"></span>
-                <span id="loadingLabel">Loading 3D model</span>
-              </div>
-              <div id="viewer" aria-label="Interactive 3D LED flasher model"></div>
-              <div class="viewer-reticle" aria-hidden="true">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              <div class="viewer-corner-label corner-tl mono">X / Y / Z</div>
-              <div class="viewer-corner-label corner-br mono">DRAG TO ORBIT</div>
-            </div>
-
-            <div class="stage-footer">
-              <div class="interaction-hint">
-                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                  <path d="M6.5 10.5V5.7a1.2 1.2 0 0 1 2.4 0v3.2-4.6a1.2 1.2 0 0 1 2.4 0V9V5.7a1.2 1.2 0 0 1 2.4 0v4.1-2.3a1.2 1.2 0 0 1 2.4 0v5.2c0 3.1-1.9 5-4.7 5H10c-1.6 0-2.5-.7-3.5-1.7l-2.1-2.2a1.2 1.2 0 0 1 1.7-1.7l.4.4V10.5Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" />
-                </svg>
-                <span>Drag to orbit · scroll to zoom · click a part</span>
-              </div>
-              <div class="stage-actions">
-                <button class="stage-button" id="resetView" type="button">
-                  <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <path d="M3.2 8.5a5.6 5.6 0 1 0 1.4-3.7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
-                    <path d="M3.2 3.8v3.5h3.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  Reset view
-                </button>
-                <button class="stage-button" id="autoRotate" type="button" aria-pressed="false">
-                  <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <path d="M3 9a6 6 0 0 1 10.2-4.2L15.5 7M15 9a6 6 0 0 1-10.2 4.2L2.5 11" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M15.5 3.3V7h-3.7M2.5 14.7V11h3.7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  Auto orbit
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="stage-legend" aria-label="Model legend">
-            <span><i class="legend-swatch legend-power"></i> power rail</span>
-            <span><i class="legend-swatch legend-signal"></i> signal path</span>
-            <span><i class="legend-swatch legend-light"></i> output light</span>
-          </div>
-        </section>
-
-        <aside class="inspector" aria-labelledby="inspector-title">
-          <div class="inspector-head">
-            <div>
-              <span class="section-label">Bench notes</span>
-              <h2 id="inspector-title">Read the circuit<br />in motion.</h2>
-            </div>
-            <button class="icon-button" id="helpButton" type="button" aria-label="Show interaction help">
-              <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                <circle cx="9" cy="9" r="6.75" stroke="currentColor" stroke-width="1.35" />
-                <path d="M7.4 6.8a1.8 1.8 0 1 1 2.8 1.5c-.8.5-1.2.9-1.2 1.8M9 12.7v.1" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
-              </svg>
-            </button>
-          </div>
-
-          <p class="inspector-copy">
-            A tiny feedback loop makes the two LEDs alternate. Use the controls below to
-            slow the handoff down, then inspect the parts that make it happen.
-          </p>
-
-          <section class="signal-panel" aria-labelledby="signal-title">
-            <div class="signal-topline">
-              <div class="signal-title-wrap">
-                <span class="signal-pulse" aria-hidden="true"></span>
-                <h3 id="signal-title">Live signal</h3>
-              </div>
-              <span class="frequency mono" id="frequencyReadout">1.6 Hz</span>
-            </div>
-            <div class="signal-graph" aria-hidden="true">
-              <div class="signal-baseline"></div>
-              <div class="signal-wave signal-wave-a"></div>
-              <div class="signal-wave signal-wave-b"></div>
-              <span class="signal-marker marker-a"></span>
-              <span class="signal-marker marker-b"></span>
-            </div>
-            <div class="signal-caption">
-              <span>LED output</span>
-              <span class="mono">D1 ↔ D2</span>
-            </div>
-          </section>
-
-          <section class="controls-section" aria-labelledby="controls-title">
-            <div class="section-heading">
-              <h3 id="controls-title">Circuit controls</h3>
-              <span class="mono section-meta">SIM / 001</span>
-            </div>
-            <div class="control-row control-row-toggle">
-              <div>
-                <span class="control-name">Run signal</span>
-                <span class="control-help">Alternate the LED output</span>
-              </div>
-              <label class="toggle-control">
-                <input id="runSignal" type="checkbox" checked />
-                <span class="toggle-track"><span class="toggle-thumb"></span></span>
-                <span class="sr-only">Run signal</span>
-              </label>
-            </div>
-            <div class="control-row control-row-range">
-              <div class="range-head">
-                <div>
-                  <span class="control-name">Blink rate</span>
-                  <span class="control-help">Slow down the charge cycle</span>
-                </div>
-                <span class="range-value mono" id="speedValue">1.0×</span>
-              </div>
-              <input id="speedControl" class="range-control" type="range" min="0.45" max="2.2" step="0.05" value="1" aria-label="Blink rate" />
-            </div>
-          </section>
-
-          <section class="path-section" aria-labelledby="path-title">
-            <div class="section-heading">
-              <h3 id="path-title">Signal path</h3>
-              <span class="mono section-meta">5 V IN</span>
-            </div>
-            <div class="path-list" id="pathList">
-              <button class="path-row" type="button" data-component="Q1">
-                <span class="path-index mono">01</span>
-                <span class="path-node"><i class="path-light"></i>Q1 transistor</span>
-                <span class="path-role">switch</span>
-              </button>
-              <button class="path-row" type="button" data-component="D1">
-                <span class="path-index mono">02</span>
-                <span class="path-node"><i class="path-light"></i>D1 LED</span>
-                <span class="path-role">output</span>
-              </button>
-              <button class="path-row" type="button" data-component="C1">
-                <span class="path-index mono">03</span>
-                <span class="path-node"><i class="path-light"></i>C1 capacitor</span>
-                <span class="path-role">timing</span>
-              </button>
-            </div>
-          </section>
-
-          <section class="components-section" aria-labelledby="components-title">
-            <div class="section-heading">
-              <h3 id="components-title">Inspect a part</h3>
-              <span class="mono section-meta">6 PARTS</span>
-            </div>
-            <div class="component-list">
-              <button class="component-row is-selected" type="button" data-component="D1">
-                <span class="component-id mono">D1</span>
-                <span class="component-main"><strong>Red LED</strong><small>left output</small></span>
-                <span class="component-state">OUTPUT</span>
-                <svg class="row-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </button>
-              <button class="component-row" type="button" data-component="D2">
-                <span class="component-id mono">D2</span>
-                <span class="component-main"><strong>Red LED</strong><small>right output</small></span>
-                <span class="component-state">OUTPUT</span>
-                <svg class="row-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </button>
-              <button class="component-row" type="button" data-component="Q1">
-                <span class="component-id mono">Q1</span>
-                <span class="component-main"><strong>NPN transistor</strong><small>left switch</small></span>
-                <span class="component-state">SWITCH</span>
-                <svg class="row-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </button>
-              <button class="component-row" type="button" data-component="Q2">
-                <span class="component-id mono">Q2</span>
-                <span class="component-main"><strong>NPN transistor</strong><small>right switch</small></span>
-                <span class="component-state">SWITCH</span>
-                <svg class="row-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </button>
-              <button class="component-row" type="button" data-component="C1">
-                <span class="component-id mono">C1</span>
-                <span class="component-main"><strong>100 μF capacitor</strong><small>left timing</small></span>
-                <span class="component-state">TIMING</span>
-                <svg class="row-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </button>
-              <button class="component-row" type="button" data-component="C2">
-                <span class="component-id mono">C2</span>
-                <span class="component-main"><strong>100 μF capacitor</strong><small>right timing</small></span>
-                <span class="component-state">TIMING</span>
-                <svg class="row-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </button>
-            </div>
-          </section>
-
-          <div class="selected-part" id="selectedPart" aria-live="polite">
-            <div class="selected-part-topline">
-              <span class="selected-part-label">Selected part</span>
-              <span class="mono" id="selectedPartId">D1</span>
-            </div>
-            <h3 id="selectedPartName">Red LED</h3>
-            <p id="selectedPartDescription">Emits the left half of the alternating pulse.</p>
-          </div>
-
-          <footer class="inspector-footer">
-            <span>Built from a Blender scene</span>
-            <span class="mono">GLB / 3.0 MB</span>
-          </footer>
-        </aside>
-      </main>
-    </div>
-
-    <div class="help-popover" id="helpPopover" hidden>
-      <div class="help-popover-head">
-        <strong>How to explore</strong>
-        <button class="icon-button icon-button-small" id="closeHelp" type="button" aria-label="Close help">
-          <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="m5 5 8 8M13 5l-8 8" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" /></svg>
-        </button>
+      <div class="loading-state" id="loadingState" role="status" aria-live="polite">
+        <span class="loader" aria-hidden="true"></span>
+        <span id="loadingLabel">Loading model…</span>
       </div>
-      <p>Drag anywhere in the viewport to orbit. Click a listed part or a mesh in the model to focus it. Use Reset view to return to the full build.</p>
-    </div>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <noscript>This interactive model needs JavaScript enabled to run.</noscript>
+      <button class="control-button" id="resetView" type="button" aria-label="Reset camera view">
+        <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M3.2 8.5a5.6 5.6 0 1 0 1.4-3.7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+          <path d="M3.2 3.8v3.5h3.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Reset</span>
+      </button>
+
+      <p class="hint">Drag to orbit · scroll to zoom</p>
+    </main>
+
+    <noscript>This 3D model viewer needs JavaScript enabled.</noscript>
     <script type="module" src="./app.js"></script>
   </body>
 </html>

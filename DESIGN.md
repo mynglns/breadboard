@@ -2,7 +2,7 @@
 
 ## World
 
-An instrument bench at dusk: dark green-black surfaces, workbench notes, and a single acid-lime status signal. The model is the object under inspection, not a decorative hero image.
+A quiet instrument bench at dusk: a dark green-black field, a faint grid, and the supplied model as the only subject. The interface stays out of the way.
 
 ## Type
 
@@ -22,8 +22,8 @@ An instrument bench at dusk: dark green-black surfaces, workbench notes, and a s
 
 ## Composition
 
-The first viewport uses a two-column bench layout: the model gets the larger left field while the right inspector explains the signal and exposes controls. The panel uses thin rules and open rows so it reads as notes at a workbench rather than a stack of generic cards.
+The model owns the full viewport. A quiet dark field, a faint grid, and two small utility affordances keep the viewer legible without competing with the object.
 
 ## Signature interaction
 
-Clicking a component in the model or inspector focuses it in the camera, moves the selected outline, and updates the part note. The LEDs pulse out of phase while the live signal is running.
+Orbit and zoom are the experience. Reset returns the camera to a considered three-quarter view of the full assembly.

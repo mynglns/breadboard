@@ -2,7 +2,7 @@
 
 An interactive Three.js viewer for the `LED_Flasher_Breadboard.glb` scene.
 
-The site is intentionally static: the model, interface, and viewer logic live in the repository and load in any modern browser. The GitHub Pages workflow in `.github/workflows/pages.yml` publishes the root of `main` automatically once Pages is configured to use GitHub Actions.
+The site is intentionally minimal and static: open the URL, and the model loads in the browser without a manual download. The GitHub Pages workflow in `.github/workflows/pages.yml` publishes the root of `main` automatically.
 
 ## Run locally
 
@@ -17,9 +17,7 @@ Then open <http://localhost:4173>.
 ## Explore
 
 - Drag in the viewport to orbit the model and scroll to zoom.
-- Click a mesh or a part row to focus a component.
-- Use `Run signal` and `Blink rate` to change the simulated alternating LED pulse.
-- `Auto orbit` and `Reset view` are available below the model.
+- Use `Reset` in the corner to restore the starting camera view.
 
 ## Asset
 
