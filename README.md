@@ -1,8 +1,8 @@
-# LED Flasher / Interactive Build
+# LED Flasher / 3D Model Viewer
 
-An interactive Three.js viewer for the `LED_Flasher_Breadboard.glb` scene.
+Minimal browser viewer for the `LED_Flasher_Breadboard.glb` scene.
 
-The site is intentionally minimal and static: open the URL, and the model loads in the browser without a manual download. The GitHub Pages workflow in `.github/workflows/pages.yml` publishes the root of `main` automatically.
+Open the published URL and the model loads automatically in the browser. No manual download, build step, or package install is required. The GitHub Pages workflow in `.github/workflows/pages.yml` publishes the root of `main` automatically.
 
 ## Run locally
 
@@ -16,9 +16,10 @@ Then open <http://localhost:4173>.
 
 ## Explore
 
-- Drag in the viewport to orbit the model and scroll to zoom.
-- Use `Reset` in the corner to restore the starting camera view.
+- Drag to orbit the model.
+- Scroll to zoom.
+- Use `Reset` to restore the starting camera view.
 
 ## Asset
 
-`assets/LED_Flasher_Breadboard.glb` is the supplied Blender-exported model. The viewer uses the model's `D1`, `D2`, `Q1`, `Q2`, `C1`, and `C2` node naming to make the 3D scene selectable.
+`assets/LED_Flasher_Breadboard.glb` is the supplied Blender-exported model loaded by the viewer.
